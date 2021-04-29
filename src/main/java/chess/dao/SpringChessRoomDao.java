@@ -30,7 +30,7 @@ public class SpringChessRoomDao implements ChessRoomRepository {
 
     @Override
     public List<RoomDto> findAllRoom() {
-        String query = "select * from chessroom order by room_id asc";
+        String query = "select * from chessRoom order by room_id asc";
         return jdbcTemplate.query(
                 query,
                 (resultSet, rowNum) -> {
@@ -46,13 +46,13 @@ public class SpringChessRoomDao implements ChessRoomRepository {
 
     @Override
     public String findRoomNameById(String id) {
-        String query = "select room_name from chessroom where room_id = ?";
+        String query = "select room_name from chessRoom where room_id = ?";
         return jdbcTemplate.queryForObject(query, String.class, id);
     }
 
     @Override
     public void delete(String id) {
-        String query = "DELETE FROM chessroom WHERE room_id = ?";
+        String query = "DELETE FROM chessRoom WHERE room_id = ?";
         this.jdbcTemplate.update(query, id);
     }
 }

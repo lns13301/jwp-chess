@@ -1,12 +1,12 @@
-CREATE TABLE IF NOT EXISTS chessroom
+CREATE TABLE IF NOT EXISTS chessRoom
 (
     room_id       INT          NOT NULL AUTO_INCREMENT,
     room_name     VARCHAR(255) NOT NULL,
-    room_password VARCHAR(255) NOT NULL,
+    room_password VARCHAR(255),
     PRIMARY KEY (room_id)
 );
 
-CREATE TABLE IF NOT EXISTS chessgame
+CREATE TABLE IF NOT EXISTS chessGame
 (
     command_log  INT         NOT NULL AUTO_INCREMENT,
     room_id      INT         NOT NULL,
