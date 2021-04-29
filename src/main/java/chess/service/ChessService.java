@@ -29,39 +29,39 @@ public class ChessService {
 
     private ChessGame loadChessGame(String roomNumber) {
         List<String> commands = chessLogDao.applyCommand(roomNumber);
-        ChessGame chessGame = new ChessGame();
-        chessGame.settingBoard();
+        ChessGame chessgame = new ChessGame();
+        chessgame.settingBoard();
 
         for (String command : commands) {
-            chessGame.move(command);
+            chessgame.move(command);
         }
 
-        return chessGame;
+        return chessgame;
     }
 
     public BoardDto move(MoveRequestDto moveRequestDto) throws SQLException {
-        ChessGame chessGame = loadChessGame(moveRequestDto.getRoomId());
+        ChessGame chessgame = loadChessGame(moveRequestDto.getRoomId());
 
         try {
-            BoardDto boardDto = movePiece(chessGame, moveRequestDto);
+            BoardDto boardDto = movePiece(chessgame, moveRequestDto);
             chessLogDao.addLog(moveRequestDto.getRoomId(), moveRequestDto.getTarget(), moveRequestDto.getDestination());
             return boardDto;
         } catch (Exception e) {
-            return start(chessGame);
+            return start(chessgame);
         }
     }
 
-    private BoardDto start(ChessGame chessGame) {
-        Board board = chessGame.getBoard();
-        return new BoardDto(board, chessGame.turn());
+    private BoardDto start(ChessGame chessgame) {
+        Board board = chessgame.getBoard();
+        return new BoardDto(board, chessgame.turn());
     }
 
-    private BoardDto movePiece(ChessGame chessGame, MoveRequestDto moveRequestDto) {
-        chessGame.move(moveRequestDto.getTarget(), moveRequestDto.getDestination());
-        if (chessGame.isBeforeEnd()) {
-            return new BoardDto(chessGame.getBoard(), chessGame.turn());
+    private BoardDto movePiece(ChessGame chessgame, MoveRequestDto moveRequestDto) {
+        chessgame.move(moveRequestDto.getTarget(), moveRequestDto.getDestination());
+        if (chessgame.isBeforeEnd()) {
+            return new BoardDto(chessgame.getBoard(), chessgame.turn());
         }
-        return new BoardDto(chessGame.getBoard(), chessGame.turn().name(), END_TRUE);
+        return new BoardDto(chessgame.getBoard(), chessgame.turn().name(), END_TRUE);
     }
 
     public List<String> movablePosition(MovablePositionDto movablePositionDto) {

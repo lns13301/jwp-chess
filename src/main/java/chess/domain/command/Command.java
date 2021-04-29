@@ -8,10 +8,10 @@ import java.util.Arrays;
 import java.util.function.BiConsumer;
 
 public enum Command {
-    START("start", (chessGame, input) -> chessGame.start()),
+    START("start", (chessgame, input) -> chessgame.start()),
     MOVE("move", ChessGame::move),
-    STATUS("status", (chessGame, input) -> chessGame.status()),
-    END("end", (chessGame, input) -> chessGame.end());
+    STATUS("status", (chessgame, input) -> chessgame.status()),
+    END("end", (chessgame, input) -> chessgame.end());
 
     private static final String DELIMITER = " ";
 
@@ -30,7 +30,7 @@ public enum Command {
                 .orElseThrow(NoSuchCommandException::new);
     }
 
-    public void execute(ChessGame chessGame, String input) {
-        biConsumer.accept(chessGame, input);
+    public void execute(ChessGame chessgame, String input) {
+        biConsumer.accept(chessgame, input);
     }
 }

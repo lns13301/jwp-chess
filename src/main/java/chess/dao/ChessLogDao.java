@@ -44,7 +44,7 @@ public class ChessLogDao {
 
     public void addLog(String roomId, String target, String destination) {
         java.sql.Connection connection = getConnection();
-        String query = "INSERT INTO chessGame (room_id, target, destination) VALUES (?, ?, ?)";
+        String query = "INSERT INTO chessgame (room_id, target, destination) VALUES (?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(query);) {
             pstmt.setString(1, roomId);
             pstmt.setString(2, target);
@@ -60,7 +60,7 @@ public class ChessLogDao {
 
     public List<String> applyCommand(String userId) {
         java.sql.Connection connection = getConnection();
-        String query = "SELECT target, destination FROM chess.chessGame WHERE room_id = ? ORDER BY command_date ASC;";
+        String query = "SELECT target, destination FROM chess.chessgame WHERE room_id = ? ORDER BY command_date ASC;";
         try (PreparedStatement pstmt = connection.prepareStatement(query);) {
             pstmt.setString(1, userId);
             ResultSet rs = pstmt.executeQuery();
@@ -82,7 +82,7 @@ public class ChessLogDao {
 
     public void deleteLog(String roomId) {
         java.sql.Connection connection = getConnection();
-        String query = "DELETE FROM chess.chessGame WHERE room_id = ?";
+        String query = "DELETE FROM chess.chessgame WHERE room_id = ?";
 
         try (PreparedStatement pstmt = connection.prepareStatement(query);) {
             pstmt.setString(1, roomId);

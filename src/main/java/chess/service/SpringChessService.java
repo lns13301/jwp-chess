@@ -39,15 +39,15 @@ public class SpringChessService {
     private ChessGame loadChessGame(String id) {
         validateRoom(id);
         List<CommandDto> commands = springChessLogDao.find(id);
-        ChessGame chessGame = new ChessGame();
+        ChessGame chessgame = new ChessGame();
 
-        chessGame.settingBoard();
+        chessgame.settingBoard();
 
         for (CommandDto command : commands) {
-            chessGame.move(command.getTarget(), command.getDestination());
+            chessgame.move(command.getTarget(), command.getDestination());
         }
 
-        return chessGame;
+        return chessgame;
     }
 
     private void validateRoom(String name) {
@@ -57,27 +57,27 @@ public class SpringChessService {
     }
 
     public BoardDto move(MoveRequestDto moveRequestDto) {
-        ChessGame chessGame = loadChessGame(moveRequestDto.getRoomId());
+        ChessGame chessgame = loadChessGame(moveRequestDto.getRoomId());
 
-        return movePiece(chessGame, moveRequestDto);
+        return movePiece(chessgame, moveRequestDto);
     }
 
-    private BoardDto start(ChessGame chessGame) {
-        Board board = chessGame.getBoard();
-        return new BoardDto(board, chessGame.turn());
+    private BoardDto start(ChessGame chessgame) {
+        Board board = chessgame.getBoard();
+        return new BoardDto(board, chessgame.turn());
     }
 
-    private BoardDto movePiece(ChessGame chessGame, MoveRequestDto moveRequestDto) {
-        if (!chessGame.move(moveRequestDto.getTarget(), moveRequestDto.getDestination())) {
+    private BoardDto movePiece(ChessGame chessgame, MoveRequestDto moveRequestDto) {
+        if (!chessgame.move(moveRequestDto.getTarget(), moveRequestDto.getDestination())) {
             throw new InvalidMoveException();
         }
 
         springChessLogDao.add(moveRequestDto);
 
-        if (chessGame.isBeforeEnd()) {
-            return new BoardDto(chessGame.getBoard(), chessGame.turn());
+        if (chessgame.isBeforeEnd()) {
+            return new BoardDto(chessgame.getBoard(), chessgame.turn());
         }
-        return new BoardDto(chessGame.getBoard(), chessGame.turn().name(), END_TRUE);
+        return new BoardDto(chessgame.getBoard(), chessgame.turn().name(), END_TRUE);
     }
 
     public List<String> movablePosition(MovablePositionDto movablePositionDto) {

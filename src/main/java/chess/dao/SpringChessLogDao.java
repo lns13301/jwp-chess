@@ -18,7 +18,7 @@ public class SpringChessLogDao implements ChessRepository {
 
     public SpringChessLogDao(DataSource dataSource, JdbcTemplate jdbcTemplate) {
         this.simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
-                .withTableName("chessGame")
+                .withTableName("chessgame")
                 .usingGeneratedKeyColumns("id");
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -31,7 +31,7 @@ public class SpringChessLogDao implements ChessRepository {
 
     @Override
     public List<CommandDto> find(String id) {
-        String query = "select target, destination from chessGame where room_id = ? ORDER BY command_date ASC;";
+        String query = "select target, destination from chessgame where room_id = ? ORDER BY command_date ASC;";
         return jdbcTemplate.query(
                 query,
                 (resultSet, rowNum) -> {
@@ -46,13 +46,13 @@ public class SpringChessLogDao implements ChessRepository {
 
     @Override
     public void delete(String roomId) {
-        String query = "DELETE FROM chessGame WHERE room_id = ?";
+        String query = "DELETE FROM chessgame WHERE room_id = ?";
         this.jdbcTemplate.update(query, roomId);
     }
 
     @Override
     public String findRoomById(String id) {
-        String query = "select room_id from chessRoom where room_id = ?";
+        String query = "select room_id from chessroom where room_id = ?";
         return jdbcTemplate.queryForObject(query, String.class, id);
     }
 }

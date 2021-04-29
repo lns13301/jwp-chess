@@ -7,26 +7,26 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessController {
-    public void run(ChessGame chessGame) {
+    public void run(ChessGame chessgame) {
         OutputView.printManual();
-        while (chessGame.isBeforeEnd()) {
-            playGame(chessGame);
+        while (chessgame.isBeforeEnd()) {
+            playGame(chessgame);
         }
     }
 
-    public void playGame(ChessGame chessGame) {
+    public void playGame(ChessGame chessgame) {
         try {
             String inputCommand = InputView.inputCommand();
-            Command.findCommand(inputCommand).execute(chessGame, inputCommand);
-            checkGameStart(chessGame);
-            OutputView.printBoard(chessGame.getBoard());
+            Command.findCommand(inputCommand).execute(chessgame, inputCommand);
+            checkGameStart(chessgame);
+            OutputView.printBoard(chessgame.getBoard());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private void checkGameStart(ChessGame chessGame) {
-        if (chessGame.isBeforeStart()) {
+    private void checkGameStart(ChessGame chessgame) {
+        if (chessgame.isBeforeStart()) {
             throw new GameIsNotStartException();
         }
     }
